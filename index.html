@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчет Накшатры</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="stars"></div>
+    </div>
+
+    <main class="widget-container">
+        <div class="glass-card">
+            <header class="widget-header">
+                <h1>Узнай свою Накшатру</h1>
+                <p class="subtitle">Ведическая астрология раскроет тайны вашей души</p>
+            </header>
+
+            <form id="nakshatra-form" class="widget-form">
+                <div class="form-group">
+                    <label for="birth-date">Дата рождения</label>
+                    <div style="position: relative;">
+                        <input type="text" id="birth-date-input" placeholder="Выберите дату" readonly required>
+                        <input type="hidden" id="birth-date">
+                        <svg class="calendar-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+
+                        <div id="calendar-popup" class="calendar-popup hidden">
+                            <div class="calendar-header">
+                                <div class="custom-select" id="custom-month">
+                                    <div class="select-trigger">
+                                        <span class="trigger-text">Месяц</span>
+                                        <div class="arrow"></div>
+                                    </div>
+                                    <div class="select-options"></div>
+                                </div>
+                                <div class="custom-select" id="custom-year">
+                                    <div class="select-trigger">
+                                        <span class="trigger-text">Год</span>
+                                        <div class="arrow"></div>
+                                    </div>
+                                    <div class="select-options"></div>
+                                </div>
+                            </div>
+                            <div class="day-names">
+                                <div>Пн</div>
+                                <div>Вт</div>
+                                <div>Ср</div>
+                                <div>Чт</div>
+                                <div>Пт</div>
+                                <div>Сб</div>
+                                <div>Вс</div>
+                            </div>
+                            <div id="days-grid" class="days-grid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="birth-time">Время рождения</label>
+                    <input type="time" id="birth-time" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Место рождения (Часовой пояс)</label>
+                    <div class="custom-select" id="custom-timezone">
+                        <div class="select-trigger">
+                            <span class="trigger-text">Выберите часовой пояс</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="select-options">
+                            <div class="option" data-value="3">UTC+3 (Москва, Санкт-Петербург)</div>
+                            <div class="option" data-value="2">UTC+2 (Калининград, Восточная Европа)</div>
+                            <div class="option" data-value="4">UTC+4 (Самара, Тбилиси)</div>
+                            <div class="option" data-value="5">UTC+5 (Екатеринбург)</div>
+                            <div class="option" data-value="6">UTC+6 (Омск)</div>
+                            <div class="option" data-value="7">UTC+7 (Новосибирск, Красноярск)</div>
+                            <div class="option" data-value="8">UTC+8 (Иркутск)</div>
+                            <div class="option" data-value="9">UTC+9 (Якутск)</div>
+                            <div class="option" data-value="10">UTC+10 (Владивосток)</div>
+                            <div class="option" data-value="11">UTC+11 (Магадан)</div>
+                            <div class="option" data-value="12">UTC+12 (Камчатка)</div>
+                            <div class="option" data-value="0">UTC+0 (Лондон, Гринвич)</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="timezone" required>
+                    <small class="hint">Укажите часовой пояс на момент рождения</small>
+                </div>
+
+                <button type="submit" class="calculate-btn">
+                    <span class="btn-text">Рассчитать</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </form>
+
+            <div id="result-container" class="result-container hidden">
+                <div class="loader hidden" id="loader">
+                    <div class="spinner"></div>
+                    <p>Вычисляем положение звезд...</p>
+                </div>
+
+                <div id="result-content" class="result-content hidden">
+                    <div class="result-header">
+                        <span class="label">Ваша Накшатра:</span>
+                        <h2 id="nakshatra-name" class="nakshatra-title"></h2>
+                    </div>
+
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Пада (Четверть):</span>
+                            <span id="nakshatra-pada" class="detail-value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Управитель:</span>
+                            <span id="nakshatra-lord" class="detail-value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Божество:</span>
+                            <span id="nakshatra-deity" class="detail-value"></span>
+                        </div>
+                    </div>
+
+                    <div class="result-description">
+                        <p id="nakshatra-description"></p>
+                    </div>
+
+                    <button id="reset-btn" class="reset-btn">Рассчитать заново</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
