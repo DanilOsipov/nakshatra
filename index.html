@@ -10,7 +10,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <!-- CSS injected via script.js -->
 </head>
 
 <body>
@@ -96,11 +96,35 @@
 
                     <!-- Manual Mode -->
                     <div id="location-manual-mode" class="hidden">
-                        <div class="manual-inputs">
-                            <input type="number" id="manual-lat" placeholder="Широта (напр. 55.75)" step="any">
-                            <input type="number" id="manual-lng" placeholder="Долгота (напр. 37.61)" step="any">
+                        <div class="manual-inputs-container">
+                            <div class="coord-group">
+                                <label>Широта</label>
+                                <div class="coord-row">
+                                    <input type="number" id="manual-lat" placeholder="00.00" min="0" max="90"
+                                        step="any">
+                                    <div class="toggle-group">
+                                        <input type="radio" id="lat-n" name="lat-dir" value="N" checked>
+                                        <label for="lat-n">N</label>
+                                        <input type="radio" id="lat-s" name="lat-dir" value="S">
+                                        <label for="lat-s">S</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="coord-group">
+                                <label>Долгота</label>
+                                <div class="coord-row">
+                                    <input type="number" id="manual-lng" placeholder="00.00" min="0" max="180"
+                                        step="any">
+                                    <div class="toggle-group">
+                                        <input type="radio" id="lng-e" name="lng-dir" value="E" checked>
+                                        <label for="lng-e">E</label>
+                                        <input type="radio" id="lng-w" name="lng-dir" value="W">
+                                        <label for="lng-w">W</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <small class="hint">Введите координаты.</small>
+                        <small class="hint">Укажите координаты и направление (N-Север, S-Юг, E-Восток, W-Запад).</small>
                     </div>
 
                     <input type="hidden" id="latitude">
